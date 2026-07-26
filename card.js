@@ -15,6 +15,12 @@ const CARD_CSS = `
      カード名・タイプ行: モトヤアポロ（明朝の骨格でウロコなし） → Shippori Antique
      カードテキスト: DF中太丸ゴシック体（丸ゴシック） → Kosugi Maru
    読み込めない環境のためにOS標準フォントも後ろに並べておく。 */
+/* 印刷用HTMLは style.css を読まないので、カード内は必ずここで border-box を宣言する。
+   これが無いと .card-frame の height:100% + padding のぶん帯の位置がずれる。 */
+.card,
+.card * {
+  box-sizing: border-box;
+}
 .card {
   --font-title: "Shippori Antique", "Yu Mincho", "游明朝", YuMincho,
     "Hiragino Mincho ProN", "Noto Sans JP", "Yu Gothic UI", sans-serif;
@@ -200,7 +206,7 @@ function artCss(image) {
 const COLOR_FRAMES = {
   W: '#f6f2d8',
   U: '#9fd0ee',
-  B: '#a9a29d',
+  B: '#7e7e82',
   R: '#f0a08a',
   G: '#9ecfad',
 };
