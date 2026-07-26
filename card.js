@@ -2,7 +2,16 @@
 // 印刷用HTMLは単体ファイルとして成立させたいので、CSSは文字列として持つ。
 
 const CARD_CSS = `
+/* 本物の日本語版カードの書体に近い系統を、無償のGoogle Fonts（SIL OFL）で再現する。
+     カード名・タイプ行: モトヤアポロ（明朝の骨格でウロコなし） → Shippori Antique
+     カードテキスト: DF中太丸ゴシック体（丸ゴシック） → Kosugi Maru
+   読み込めない環境のためにOS標準フォントも後ろに並べておく。 */
 .card {
+  --font-title: "Shippori Antique", "Yu Mincho", "游明朝", YuMincho,
+    "Hiragino Mincho ProN", "Noto Sans JP", "Yu Gothic UI", sans-serif;
+  --font-body: "Kosugi Maru", "M PLUS Rounded 1c",
+    "Hiragino Maru Gothic ProN", "Noto Sans JP", "Yu Gothic UI", Meiryo,
+    sans-serif;
   position: relative;
   box-sizing: border-box;
   width: 63mm;
@@ -11,7 +20,7 @@ const CARD_CSS = `
   border-radius: 3mm;
   background: #0d0d0d;
   color: #111;
-  font-family: "Times New Roman", "Yu Mincho", "Hiragino Mincho ProN", serif;
+  font-family: var(--font-body);
   font-size: 2.9mm;
   line-height: 1.25;
   overflow: hidden;
@@ -34,7 +43,7 @@ const CARD_CSS = `
   border: 0.25mm solid rgba(0, 0, 0, 0.45);
   border-radius: 1.2mm;
   background: rgba(255, 255, 255, 0.55);
-  font-weight: bold;
+  font-family: var(--font-title);
   letter-spacing: 0.02em;
 }
 .card-name {
@@ -62,6 +71,8 @@ const CARD_CSS = `
   border: 0.25mm solid rgba(0, 0, 0, 0.45);
   border-radius: 1.2mm;
   background: rgba(255, 255, 255, 0.72);
+  font-family: var(--font-body);
+  font-weight: normal; /* Kosugi Maru は400のみ */
   white-space: pre-wrap;
   word-break: break-word;
 }
@@ -75,11 +86,18 @@ const CARD_CSS = `
   border-radius: 1.2mm;
   background: var(--frame, #b8b3ab);
   box-shadow: 0 0 0 0.4mm rgba(0, 0, 0, 0.35);
+  font-family: var(--font-title);
   font-size: 3.4mm;
   font-weight: bold;
   text-align: center;
 }
 `;
+
+// 印刷用HTMLでも同じ書体になるようにWebフォントを読み込む。
+// 印刷時にフォールバックで刷られないよう display=block（最大3秒待つ）。
+const FONT_LINKS = `<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&family=Shippori+Antique&display=block">`;
 
 const PRINT_CSS = `
 @page {
@@ -242,6 +260,7 @@ function buildPrintHtml(data) {
 <head>
 <meta charset="utf-8">
 <title>${escapeHtml(title)} - 印刷用</title>
+${FONT_LINKS}
 <style>${PRINT_CSS}${CARD_CSS}${artCss(data.image)}</style>
 </head>
 <body>
