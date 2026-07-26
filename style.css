@@ -1,0 +1,310 @@
+:root {
+  color-scheme: light dark;
+  --bg: #1d1f24;
+  --panel: #2a2d34;
+  --line: #444852;
+  --fg: #e8e6e1;
+  --accent: #c8a860;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 24px;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: "Segoe UI", "Yu Gothic UI", system-ui, sans-serif;
+}
+
+h1 {
+  margin: 0 0 20px;
+  font-size: 22px;
+  letter-spacing: 0.04em;
+}
+
+.layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  align-items: flex-start;
+}
+
+.editor {
+  flex: 1 1 340px;
+  max-width: 460px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--panel);
+}
+
+.field {
+  margin-bottom: 16px;
+}
+
+.field > label,
+.field > .label,
+.field-head > label,
+.field-head > .label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 13px;
+  color: #b9b6ae;
+}
+
+input[type="text"],
+input[type="number"],
+select,
+textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #1a1c21;
+  color: var(--fg);
+  font-family: inherit;
+  font-size: 14px;
+}
+
+textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+.ac {
+  position: relative;
+}
+
+.ac-list {
+  position: absolute;
+  z-index: 10;
+  top: 100%;
+  left: 0;
+  right: 0;
+  max-height: 220px;
+  overflow-y: auto;
+  margin: 2px 0 0;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #14161a;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45);
+  list-style: none;
+}
+
+.ac-list li {
+  padding: 7px 10px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.ac-list li:hover,
+.ac-list li.active {
+  background: var(--accent);
+  color: #1a1c21;
+}
+
+.field-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.field-head > label.check {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 6px;
+  color: var(--fg);
+  font-size: 13px;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+}
+
+.field-head > label.check input {
+  width: 14px;
+  height: 14px;
+  margin: 0;
+  accent-color: var(--accent);
+}
+
+button.link {
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: normal;
+  text-decoration: underline;
+}
+
+/* 名前に連動している間はそれと分かるように */
+input.linked {
+  border-style: dashed;
+  color: #c9c5bd;
+}
+
+.image-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.image-row input[type="file"] {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 12px;
+  color: #b9b6ae;
+}
+
+button.small {
+  padding: 6px 12px;
+  font-size: 12px;
+}
+
+.colors {
+  display: flex;
+  gap: 8px;
+}
+
+.colors input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.colors label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--line);
+  border-radius: 50%;
+  background: #1a1c21;
+  color: #8d8a83;
+  font-weight: bold;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.1s;
+}
+
+.colors label:hover {
+  transform: translateY(-2px);
+}
+
+.colors input:checked + label {
+  border-color: #fff;
+  background: var(--swatch);
+  color: #1a1c21;
+}
+
+.types {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 6px;
+}
+
+.types input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.types label {
+  display: inline-flex;
+  flex: 1 1 0;
+  min-width: 0;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 4px;
+  border: 2px solid var(--line);
+  border-radius: 20px;
+  background: #1a1c21;
+  color: #8d8a83;
+  /* 4項目が1行に収まるよう画面幅に応じて縮める */
+  font-size: clamp(9px, 1.9vw, 13px);
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+}
+
+.types label:hover {
+  border-color: #6a6e78;
+}
+
+.types input:checked + label {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #1a1c21;
+  font-weight: bold;
+}
+
+.pt {
+  display: flex;
+  gap: 12px;
+}
+
+.pt .field {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.pt[hidden] {
+  display: none;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+button {
+  padding: 10px 16px;
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  background: var(--accent);
+  color: #1a1c21;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button.secondary {
+  background: transparent;
+  color: var(--accent);
+}
+
+button:hover {
+  filter: brightness(1.1);
+}
+
+.preview {
+  flex: 0 0 auto;
+}
+
+.preview h2 {
+  margin: 0 0 12px;
+  font-size: 14px;
+  font-weight: normal;
+  color: #b9b6ae;
+}
+
+/* 実寸だと画面上は小さいので拡大表示 */
+.preview-stage {
+  width: calc(63mm * 1.5);
+  height: calc(88mm * 1.5);
+}
+
+.preview-stage .card {
+  transform: scale(1.5);
+  transform-origin: top left;
+}

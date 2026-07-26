@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MTG トークンメーカー</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>MTG トークンメーカー</h1>
+
+<div class="layout">
+  <form class="editor" id="editor" autocomplete="off">
+    <div class="field">
+      <label for="name">名前</label>
+      <input type="text" id="name" value="兵士">
+    </div>
+
+    <div class="field">
+      <label for="image">カード画像</label>
+      <div class="image-row">
+        <input type="file" id="image" accept="image/*">
+        <button type="button" class="secondary small" id="clearImageBtn">削除</button>
+      </div>
+    </div>
+
+    <div class="field">
+      <span class="label">色（複数選択可・選ばなくても可）</span>
+      <div class="colors" id="colors">
+        <input type="checkbox" id="color-W" value="W"><label for="color-W" style="--swatch: #f6f2d8">白</label>
+        <input type="checkbox" id="color-U" value="U"><label for="color-U" style="--swatch: #9fd0ee">青</label>
+        <input type="checkbox" id="color-B" value="B"><label for="color-B" style="--swatch: #a9a29d">黒</label>
+        <input type="checkbox" id="color-R" value="R"><label for="color-R" style="--swatch: #f0a08a">赤</label>
+        <input type="checkbox" id="color-G" value="G"><label for="color-G" style="--swatch: #9ecfad">緑</label>
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="field-head">
+        <span class="label">カードタイプ（複数選択可）</span>
+        <label class="check"><input type="checkbox" id="legendary">伝説の</label>
+      </div>
+      <div class="types" id="cardTypes">
+        <input type="checkbox" id="type-land" value="land"><label for="type-land">土地</label>
+        <input type="checkbox" id="type-artifact" value="artifact"><label for="type-artifact">アーティファクト</label>
+        <input type="checkbox" id="type-enchantment" value="enchantment"><label for="type-enchantment">エンチャント</label>
+        <input type="checkbox" id="type-creature" value="creature" checked><label for="type-creature">クリーチャー</label>
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="field-head">
+        <label for="subtype">サブタイプ</label>
+        <button type="button" class="link" id="relinkBtn" hidden>名前に合わせる</button>
+      </div>
+      <input type="text" id="subtype" placeholder="例: 人間・兵士">
+    </div>
+
+    <div class="field">
+      <label for="text">カードテキスト</label>
+      <textarea id="text" placeholder="例: 警戒&#10;このクリーチャーが死亡したとき、あなたは1点のライフを得る。"></textarea>
+    </div>
+
+    <div class="pt" id="ptRow">
+      <div class="field">
+        <label for="power">パワー</label>
+        <input type="number" id="power" value="1" step="1">
+      </div>
+      <div class="field">
+        <label for="toughness">タフネス</label>
+        <input type="number" id="toughness" value="1" step="1">
+      </div>
+    </div>
+
+    <div class="actions">
+      <button type="button" id="printBtn">印刷用HTMLを開く（A4に9枚）</button>
+      <button type="button" class="secondary" id="downloadBtn">HTMLをダウンロード</button>
+    </div>
+  </form>
+
+  <div class="preview">
+    <h2>プレビュー</h2>
+    <div class="preview-stage" id="preview"></div>
+  </div>
+</div>
+
+<script src="subtypes.js"></script>
+<script src="autocomplete.js"></script>
+<script src="card.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
