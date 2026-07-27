@@ -163,6 +163,26 @@ function subtypeCandidates() {
 attachAutocomplete(nameInput, () => ALL_SUBTYPES);
 attachAutocomplete(subtypeInput, subtypeCandidates, { segmented: true });
 
+// P/Tは数字のほか、不定値の「★」と加算の「+」を受け付ける（例: 1+★）。
+// x や * で打っても★に直す。
+function normalizePt(value) {
+  return value
+    .replace(/[xX×ｘＸ*＊☆]/g, '★')
+    .replace(/＋/g, '+')
+    .replace(/[^0-9★+]/g, '');
+}
+
+for (const id of ['power', 'toughness']) {
+  const input = document.getElementById(id);
+  input.addEventListener('input', () => {
+    const fixed = normalizePt(input.value);
+    if (fixed === input.value) return;
+    const pos = input.selectionStart;
+    input.value = fixed;
+    input.setSelectionRange(pos, pos);
+  });
+}
+
 form.addEventListener('input', update);
 form.addEventListener('change', update);
 update();
